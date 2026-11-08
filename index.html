@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto Avanzado: Contextos Reales B2</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; color: #2c3e50; max-width: 950px; margin: 0 auto; padding: 20px; background-color: #f0f4f8; }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 20px; font-weight: 800; }
+        .instrucciones { background-color: #d1ecf1; color: #0c5460; padding: 15px; border-left: 5px solid #17a2b8; border-radius: 4px; margin-bottom: 30px; font-size: 0.95em; }
+        .texto-box { background: #fff; padding: 35px; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); margin-bottom: 40px; border-top: 5px solid #3498db; }
+        .texto-title { font-weight: bold; font-size: 1.3em; margin-bottom: 15px; color: #3498db; border-bottom: 2px solid #ebf5fb; padding-bottom: 10px;}
+        .texto-content { font-size: 1.15em; line-height: 2.3; }
+        input[type="text"] { padding: 6px 12px; font-size: 1em; border: 2px solid #bdc3c7; border-radius: 6px; width: 230px; margin: 0 5px; transition: all 0.3s; font-family: monospace; }
+        input[type="text"]:focus { outline: none; border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.4); }
+        button.evaluar { background-color: #3498db; color: white; border: none; padding: 15px 40px; font-size: 1.2em; font-weight: bold; border-radius: 8px; cursor: pointer; display: block; margin: 30px auto; transition: background 0.3s; box-shadow: 0 4px 6px rgba(52,152,219,0.3); }
+        button.evaluar:hover { background-color: #2980b9; transform: translateY(-2px); }
+        .feedback { display: none; padding: 15px; margin-top: 15px; border-radius: 6px; font-size: 0.95em; line-height: 1.6; }
+        .correct { border-left: 5px solid #27ae60; background-color: #eafaf1; color: #1e8449; }
+        .incorrect { border-left: 5px solid #e74c3c; background-color: #fdedec; color: #c0392b; }
+        .keyboard { position: fixed; bottom: 25px; right: 25px; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); z-index: 1000; }
+        .keyboard-title { font-size: 0.9em; color: #7f8c8d; margin-bottom: 10px; text-align: center; font-weight: bold; }
+        .key { display: inline-block; padding: 12px 18px; margin: 3px; background: #f8f9f9; border: 1px solid #d5dbdb; border-radius: 6px; cursor: pointer; user-select: none; font-weight: bold; font-size: 1.2em; transition: all 0.2s; }
+        .key:hover { background: #e5e8e8; }
+    </style>
+</head>
+<body>
+
+    <h1>Evaluación Avanzada: Diagnóstico de Precisión</h1>
+    <div class="instrucciones">
+        <strong>Reglas del juego:</strong><br>
+        1. Identifica primero si el contexto es una hipótesis sobre el "ahora" o sobre el "pasado" (busca los marcadores de tiempo).<br>
+        2. Para los imperativos, aplica la regla de los pronombres (afirmativo = pegado; negativo = separado). Transforma sustantivos en pronombres si se indica.<br>
+        3. Cuidado con las preposiciones escondidas que exigen ciertos verbos.
+    </div>
+
+    <!-- Texto 1 -->
+    <div class="texto-box">
+        <div class="texto-title">Texto 1: Foro de Desarrollo Profesional</div>
+        <div class="texto-content">
+            <strong>Usuario: Ana_89</strong><br>
+            Estoy harta de mi empresa. No paro de quejarme <strong>1. (preposición)</strong> <input type="text" id="q1" data-answer="de"> las condiciones laborales, pero no me atrevo a irme.<br><br>
+            <strong>Respuesta de: Coach_Luis</strong><br>
+            Ana, me entristece que tú ya <strong>2. (renunciar)</strong> <input type="text" id="q2" data-answer="hayas renunciado"> a tus sueños tan joven. Te seré directo: si tú no <strong>3. (tener)</strong> <input type="text" id="q3" data-answer="tuvieras|tuvieses"> tanto miedo al cambio <u>actualmente</u>, tu vida profesional sería muy distinta.<br><br>
+            ¿Tienes un plan B en mente? Si es así, por favor, todavía no <strong>4. (contar, tú, a tu jefe - el plan)</strong> <input type="text" id="q4" data-answer="se lo cuentes|no se lo cuentes">. Es mejor que lo mantengas en secreto hasta que tú <strong>5. (firmar)</strong> <input type="text" id="q5" data-answer="firmes"> un contrato nuevo con otra compañía. Recuerda que el verdadero éxito consiste <strong>6. (preposición)</strong> <input type="text" id="q6" data-answer="en"> atreverse a dar el primer paso.
+        </div>
+        
+        <div class="feedback" id="fb-q1"><strong>1: de.</strong> Verbo + Preposición. "Quejarse DE algo/alguien" es innegociable.</div>
+        <div class="feedback" id="fb-q2"><strong>2: hayas renunciado.</strong> Subjuntivo Perfecto. Emoción presente ("me entristece") sobre una acción que ya se ha consumado recientemente o que afecta al presente ("ya").</div>
+        <div class="feedback" id="fb-q3"><strong>3: tuvieras / tuvieses.</strong> Condicional Tipo 2. Fíjate en el marcador "actualmente" y el resultado "sería". Es una hipótesis irreal sobre su estado emocional de AHORA. Imperfecto de subjuntivo.</div>
+        <div class="feedback" id="fb-q4"><strong>4: (no) se lo cuentes.</strong> Imperativo Negativo + Pronombres. A tu jefe (le -> se) + el plan (lo) + tú (cuentes). Al ser negativo ("todavía no"), los pronombres van sueltos y delante.</div>
+        <div class="feedback" id="fb-q5"><strong>5: firmes.</strong> Subjuntivo Presente. "Hasta que" apuntando a una acción del futuro (aún no ha firmado el contrato).</div>
+        <div class="feedback" id="fb-q6"><strong>6: en.</strong> Verbo + Preposición. "Consistir EN algo". Otro clásico que no acepta lógica de traducción.</div>
+    </div>
+
+    <!-- Texto 2 -->
+    <div class="texto-box">
+        <div class="texto-title">Texto 2: Reseña de un cliente furioso (Restaurante "El Mar")</div>
+        <div class="texto-content">
+            ¡Un desastre absoluto! Fuimos a celebrar nuestro aniversario <u>el viernes pasado</u>. Fue una vergüenza que el camarero nos <strong>7. (servir)</strong> <input type="text" id="q7" data-answer="sirviera|sirviese"> la comida fría después de esperar dos horas.<br><br>
+            Estoy segurísimo: si nosotros <strong>8. (leer)</strong> <input type="text" id="q8" data-answer="hubiéramos leído|hubiésemos leído"> las opiniones de internet <u>antes de reservar aquella noche</u>, habríamos cenado en casa. Cuando le reclamé al camarero, me ignoró. Así que fui a la barra y le grité: "¡<strong>9. (traer, tú, a nosotros - la cuenta)</strong> <input type="text" id="q9" data-answer="tráenosla"> ahora mismo, nos vamos!".<br><br>
+            Solo quiero decir una cosa: aunque este lugar <strong>10. (ser)</strong> <input type="text" id="q10" data-answer="sea"> el restaurante más famoso de la ciudad ahora mismo, no se lo recomiendo a nadie. Exijo que el dueño asuma la responsabilidad. ¡Gracias <strong>11. (preposición)</strong> <input type="text" id="q11" data-answer="por"> arruinar nuestra noche! 
+        </div>
+
+        <div class="feedback" id="fb-q7"><strong>7: sirviera / sirviese.</strong> Subjuntivo Imperfecto. Valoración en el pasado ("Fue una vergüenza") sobre una acción ocurrida simultáneamente en ese bloque del pasado ("el viernes pasado"). (¡Ojo, el verbo servir cambia e>i!).</div>
+        <div class="feedback" id="fb-q8"><strong>8: hubiéramos / hubiésemos leído.</strong> Condicional Tipo 3. Fíjate en los marcadores "antes de reservar aquella noche" y "habríamos cenado". Hipótesis irreal sobre el PASADO. Pluscuamperfecto de subjuntivo.</div>
+        <div class="feedback" id="fb-q9"><strong>9: tráenosla.</strong> Imperativo Afirmativo + Pronombres. Trae + a nosotros (nos) + la cuenta (la). Todo pegado. Pide tilde por ser sobreesdrújula: trá-e-nos-la.</div>
+        <div class="feedback" id="fb-q10"><strong>10: sea.</strong> Subjuntivo Presente. Concesión con "Aunque". El cliente sabe que es famoso, pero usa el subjuntivo para ningunear ese hecho ("me da igual que sea el más famoso, no lo recomiendo").</div>
+        <div class="feedback" id="fb-q11"><strong>11: por.</strong> Preposición. La expresión de agradecimiento (incluso irónico) o causa emocional siempre va con "Gracias POR".</div>
+    </div>
+
+    <button class="evaluar" onclick="checkAnswers()">Evaluar mi Gramática</button>
+
+    <div class="keyboard">
+        <div class="keyboard-title">Tildes</div>
+        <div class="key" onclick="insertChar('á')">á</div>
+        <div class="key" onclick="insertChar('é')">é</div>
+        <div class="key" onclick="insertChar('í')">í</div>
+        <div class="key" onclick="insertChar('ó')">ó</div>
+        <div class="key" onclick="insertChar('ú')">ú</div>
+        <div class="key" onclick="insertChar('ñ')">ñ</div>
+    </div>
+
+    <script>
+        let lastFocusedInput = null;
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('focus', function() { lastFocusedInput = this; });
+        });
+
+        function insertChar(char) {
+            if (lastFocusedInput) {
+                const start = lastFocusedInput.selectionStart;
+                const end = lastFocusedInput.selectionEnd;
+                const text = lastFocusedInput.value;
+                lastFocusedInput.value = text.substring(0, start) + char + text.substring(end);
+                lastFocusedInput.focus();
+                lastFocusedInput.selectionStart = lastFocusedInput.selectionEnd = start + 1;
+            }
+        }
+
+        function checkAnswers() {
+            let correctCount = 0;
+            const totalQuestions = 11;
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const input = document.getElementById('q' + i);
+                const feedback = document.getElementById('fb-q' + i);
+                
+                let userAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' '); 
+                if (i === 4 && userAnswer === "se lo cuentes") { userAnswer = "no se lo cuentes"; } 
+
+                const correctAnswers = input.getAttribute('data-answer').split('|');
+                
+                feedback.style.display = 'block';
+                input.classList.remove('correct', 'incorrect');
+
+                if (correctAnswers.includes(userAnswer)) {
+                    input.classList.add('correct');
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = "<strong>¡Exacto!</strong> " + feedback.innerHTML.replace(/<strong>(Incorrecto|¡Exacto!).*?<\/strong>/g, '');
+                    correctCount++;
+                } else {
+                    input.classList.add('incorrect');
+                    feedback.className = 'feedback incorrect';
+                    let originalText = feedback.innerHTML.replace(/<strong>(Incorrecto|¡Exacto!).*?<\/strong>/g, '');
+                    feedback.innerHTML = "<strong>Incorrecto.</strong> Tu respuesta: <em>" + (userAnswer || "(vacío)") + "</em>. <br>" + originalText;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
